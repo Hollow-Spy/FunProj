@@ -492,7 +492,7 @@ IEnumerator ZoomingIn(bool realwinner)
 
         if (OtherBars[primebar] == BarTransform && Player.GetComponent<PhotonView>().IsMine)
         {
-
+            Debug.Log("oi");
             return true;
         }
         else

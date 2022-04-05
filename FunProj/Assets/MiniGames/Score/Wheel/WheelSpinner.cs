@@ -84,9 +84,11 @@ public class WheelSpinner : MonoBehaviourPun
 
     }
 
-    public void customSpin(float strengh)
+    public void customSpin()
     {
+        float strengh = 1;
         view.RPC("SpinALL", RpcTarget.All, strengh);
+        
 
     }
 
@@ -141,12 +143,14 @@ public class WheelSpinner : MonoBehaviourPun
                 for (int i = 0; i < scoredisplays.Length; i++)
                 {
                    check = scoredisplays[i].GetWinnerView();
+
+                    if (check)
+                    {
+                        lovebuttons.SetActive(true);
+                    }
                 }
 
-                if(check)
-                {
-                    lovebuttons.SetActive(true);
-                }
+              
 
                 break;
             case 1:

@@ -7333,6 +7333,85 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 602759040}
   m_CullTransparentMesh: 1
+--- !u!1 &649127486
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 649127487}
+  - component: {fileID: 649127489}
+  - component: {fileID: 649127488}
+  m_Layer: 5
+  m_Name: LoveWinnerShower
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &649127487
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649127486}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1218351707}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &649127488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649127486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe8a3df34e5e7314abbc606f7c3432a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  displays:
+  - {fileID: 536446131}
+  - {fileID: 725487246}
+  - {fileID: 1633080353}
+  - {fileID: 409195988}
+  Wpos:
+  - {fileID: 115867282}
+  - {fileID: 866251403}
+--- !u!114 &649127489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649127486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 10
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &658256952
 GameObject:
   m_ObjectHideFlags: 0
@@ -8413,11 +8492,11 @@ MonoBehaviour:
       - m_Target: {fileID: 1350463777}
         m_TargetAssemblyTypeName: WheelSpinner, Assembly-CSharp
         m_MethodName: customSpin
-        m_Mode: 3
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 888
           m_FloatArgument: 111000
           m_StringArgument: 
           m_BoolArgument: 0
@@ -9140,6 +9219,7 @@ RectTransform:
   - {fileID: 1747116991}
   - {fileID: 1000707448}
   - {fileID: 1145178874}
+  - {fileID: 649127487}
   - {fileID: 2023570530}
   m_Father: {fileID: 0}
   m_RootOrder: 4
@@ -16776,7 +16856,7 @@ GameObject:
   - component: {fileID: 2023570531}
   - component: {fileID: 2023570532}
   m_Layer: 5
-  m_Name: Buttons1
+  m_Name: Buttons1Love
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16798,7 +16878,7 @@ RectTransform:
   - {fileID: 1478767519}
   - {fileID: 1194584550}
   m_Father: {fileID: 1218351707}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -16827,9 +16907,8 @@ MonoBehaviour:
   - {fileID: 725487246}
   - {fileID: 1633080353}
   - {fileID: 409195988}
-  Wpos:
-  - {fileID: 115867282}
-  - {fileID: 866251403}
+  uiCanvas: {fileID: 1218351706}
+  cam1: {fileID: 278092714}
 --- !u!114 &2023570532
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -60250,6 +60250,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6486200191405202042, guid: 0eef257633006974bbcd1efe039a21c9, type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0eef257633006974bbcd1efe039a21c9, type: 3}
 --- !u!1001 &1703097674
@@ -61130,6 +61134,10 @@ PrefabInstance:
     - target: {fileID: 4386980855490456436, guid: c2c817b6c30eb014aa711941f23a9d9d, type: 3}
       propertyPath: m_Name
       value: TransitionONCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 4386980855490456436, guid: c2c817b6c30eb014aa711941f23a9d9d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4386980855490456439, guid: c2c817b6c30eb014aa711941f23a9d9d, type: 3}
       propertyPath: m_UpdateMode
