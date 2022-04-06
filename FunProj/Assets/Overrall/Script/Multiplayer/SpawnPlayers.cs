@@ -69,6 +69,7 @@ public class SpawnPlayers : MonoBehaviourPunCallbacks/*, IPunObservable*/
 
                 active = false;
                 view.RPC("StartGame", RpcTarget.All);
+               
             }
 
         }
@@ -79,6 +80,8 @@ public class SpawnPlayers : MonoBehaviourPunCallbacks/*, IPunObservable*/
 
     private void Start()
     {
+        
+        
         view = GetComponent<PhotonView>();
         PlayerIds = new int[PlayerPrefs.GetInt("PlayerNumber")];
         for(int i =0;i<PlayerIds.Length;i++)
@@ -88,7 +91,7 @@ public class SpawnPlayers : MonoBehaviourPunCallbacks/*, IPunObservable*/
        
   
   
-        Vector3 spawnPos = new Vector3(spawnPositions[PlayersJoined].position.x - 0.7570001f, spawnPositions[PlayersJoined].position.y, spawnPositions[PlayersJoined].position.z);
+        /*Vector3 spawnPos = new Vector3(spawnPositions[PlayersJoined].position.x - 0.7570001f, spawnPositions[PlayersJoined].position.y, spawnPositions[PlayersJoined].position.z);
 
         if(PhotonNetwork.LocalPlayer.CustomProperties["playerAvatar"] == null) 
         {
@@ -100,14 +103,49 @@ public class SpawnPlayers : MonoBehaviourPunCallbacks/*, IPunObservable*/
             GameObject playertoSpawn = playerPrefabs[(int)PhotonNetwork.LocalPlayer.CustomProperties["playerAvatar"]];
             PhotonNetwork.Instantiate(playertoSpawn.name, spawnPos, Quaternion.identity);
 
-        }
+        }*/
         active = true;
-      
-       
+
+        StartCoroutine(SpawnPlayer());
 
 
     }
-  
+
+
+
+    IEnumerator SpawnPlayer()
+    {
+        yield return new WaitForSeconds(.1f);
+        int pos = 0;
+        Player[] players = PhotonNetwork.PlayerList;
+        for (int i = 0; i < players.Length; i++)
+        {
+            if (players[i] == PhotonNetwork.LocalPlayer)
+            {
+                pos = i;
+            }
+        }
+
+
+
+
+        Vector3 spawnPos = new Vector3(spawnPositions[pos].position.x - 0.7570001f, spawnPositions[pos].position.y, spawnPositions[pos].position.z);
+
+        if (PhotonNetwork.LocalPlayer.CustomProperties["playerAvatar"] == null)
+        {
+            PhotonNetwork.Instantiate(playerPrefabs[0].name, spawnPos, Quaternion.identity);
+
+        }
+        else
+        {
+            GameObject playertoSpawn = playerPrefabs[(int)PhotonNetwork.LocalPlayer.CustomProperties["playerAvatar"]];
+            PhotonNetwork.Instantiate(playertoSpawn.name, spawnPos, Quaternion.identity);
+
+        }
+    }
+
+
+
     IEnumerator waitCountdown()
     {
      
