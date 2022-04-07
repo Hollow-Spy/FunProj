@@ -9,7 +9,7 @@ public class LoveShower : MonoBehaviourPun
     [SerializeField] Transform[] Wpos;
 
     [SerializeField] GameObject OldCamObj, NewCamObj,TransitionOff;
-
+    
     
 
     private void Start()

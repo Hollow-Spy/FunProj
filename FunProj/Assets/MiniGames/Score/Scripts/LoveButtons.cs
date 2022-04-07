@@ -9,7 +9,7 @@ public class LoveButtons : MonoBehaviourPun
 
     [SerializeField] ScoreInfoDisplay[] displays;
 
- 
+    [SerializeField] LoveShower loveshower;
 
     PhotonView view;
 
@@ -50,7 +50,7 @@ public class LoveButtons : MonoBehaviourPun
 
     public void Click(int index)
     {
-        FindObjectOfType<LoveShower>().Click(index, winnerindex);
+        loveshower.Click(index, winnerindex);
     }
 
    

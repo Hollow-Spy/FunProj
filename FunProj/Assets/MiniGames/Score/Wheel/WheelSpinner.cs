@@ -13,7 +13,7 @@ public class WheelSpinner : MonoBehaviourPun
     [SerializeField] Animator ArrowAnimator;
     [SerializeField] GameObject Spark,ReSpinText,DeathText,CurrentCam,OGCam,backgroundobj,transitionOff, boringText,lovetext,lovebuttons ;
     [SerializeField] SpriteRenderer wheelsprite;
-    
+    [SerializeField] OneVOnePicker onevoner;
 
 
     private void Start()
@@ -86,7 +86,9 @@ public class WheelSpinner : MonoBehaviourPun
 
     public void customSpin()
     {
-        float strengh = 1;
+        // float strengh = 199777; death
+        float strengh = 299777; 
+        
         view.RPC("SpinALL", RpcTarget.All, strengh);
         
 
@@ -183,6 +185,11 @@ public class WheelSpinner : MonoBehaviourPun
 
 
                 break;
+
+            case 2:
+                onevoner.FindOneVOne();
+                break;
+
             case 4:
                 boringText.SetActive(true);
                 yield return new WaitForSeconds(5f);
