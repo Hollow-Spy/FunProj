@@ -8,8 +8,9 @@ public class LoveShower : MonoBehaviourPun
    [SerializeField] ScoreInfoDisplay[] displays;
     [SerializeField] Transform[] Wpos;
 
-    [SerializeField] GameObject OldCamObj, NewCamObj,TransitionOff;
-    
+    [SerializeField] GameObject OldCamObj, NewCamObj,TransitionOff,WheelPinkBackground;
+    [SerializeField] Animator PosAnimator;
+   
     
 
     private void Start()
@@ -34,10 +35,24 @@ public class LoveShower : MonoBehaviourPun
         yield return new WaitForSeconds(.5f);
      
         displays[windex].Player.transform.position = Wpos[0].position;
-        displays[index].Player.transform.position = Wpos[1].position;
+       displays[index].Player.transform.position = Wpos[1].position;
+
+
+       // displays[0].Player.transform.position = Wpos[0].position;
+       // displays[1].Player.transform.position = Wpos[1].position;
+
 
         yield return new WaitForSeconds(.5f);
+        if(WheelPinkBackground)
+        {
+            WheelPinkBackground.SetActive(false);
+        }
 
+        if(PosAnimator)
+        {
+            PosAnimator.enabled = true;
+        }
+       
         TransitionOff.SetActive(false);
         OldCamObj.SetActive(false);
         NewCamObj.SetActive(true);

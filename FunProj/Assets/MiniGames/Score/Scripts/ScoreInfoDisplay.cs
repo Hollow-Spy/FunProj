@@ -299,8 +299,11 @@ public class ScoreInfoDisplay : MonoBehaviourPun
         PlayerPrefs.SetInt("OldScore", PlayerPrefs.GetInt("NewScore") + PlayerPrefs.GetInt("OldScore"));
         PlayerPrefs.SetInt("NewScore", 0);
         
-
-        view.RPC("Emote", RpcTarget.All, parameter, winner);
+          if(Player.GetComponent<PhotonView>().IsMine )
+        {
+            view.RPC("Emote", RpcTarget.All, parameter, winner);
+        }
+        
 
         StartCoroutine(ZoomingIn(RealWinner) );
 
@@ -492,7 +495,7 @@ IEnumerator ZoomingIn(bool realwinner)
 
         if (OtherBars[primebar] == BarTransform && Player.GetComponent<PhotonView>().IsMine)
         {
-            Debug.Log("oi");
+         
             return true;
         }
         else

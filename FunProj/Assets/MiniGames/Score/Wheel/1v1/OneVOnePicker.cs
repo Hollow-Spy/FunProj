@@ -49,9 +49,13 @@ public class OneVOnePicker : MonoBehaviourPun
             }
 
         }
-   
 
-        loveshower.Click(randomtarget, winnerindex);
+       if(PhotonNetwork.IsMasterClient)
+        {
+            loveshower.Click(randomtarget, winnerindex);
+
+        }
+        
 
 
     }

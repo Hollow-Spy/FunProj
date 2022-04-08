@@ -87,8 +87,8 @@ public class WheelSpinner : MonoBehaviourPun
     public void customSpin()
     {
         // float strengh = 199777; death
-        float strengh = 299777; 
-        
+        // float strengh = 299777;  1v1
+        float strengh = 459977; 
         view.RPC("SpinALL", RpcTarget.All, strengh);
         
 
@@ -188,6 +188,8 @@ public class WheelSpinner : MonoBehaviourPun
 
             case 2:
                 onevoner.FindOneVOne();
+                yield return new WaitForSeconds(6.5f);
+                transitionOff.SetActive(true);
                 break;
 
             case 4:
@@ -195,7 +197,10 @@ public class WheelSpinner : MonoBehaviourPun
                 yield return new WaitForSeconds(5f);
                 transitionOff.SetActive(true);
                 break;
+            case 5:
+                StartCoroutine(SpeedUp(77777 / 30));
 
+                break;
 
             case 6:
                 ReSpinText.SetActive(true);
