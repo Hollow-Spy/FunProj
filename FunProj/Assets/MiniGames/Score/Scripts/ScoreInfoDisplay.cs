@@ -14,6 +14,7 @@ public class ScoreInfoDisplay : MonoBehaviourPun
     [SerializeField] float maxBarScale;
     [SerializeField] float oldScoreBarSpeed;
     [SerializeField] ScoreInfoDisplay[] displays;
+   
     public GameObject Player;
 
     [SerializeField] Transform spawnPosition;
@@ -317,8 +318,10 @@ public class ScoreInfoDisplay : MonoBehaviourPun
     {
         if(topplayer)
         {
+            
             bool checkwinnerr = GetWinner();
-            if(!checkwinnerr)
+    
+            if (!checkwinnerr)
             {
                 return;
             }
@@ -333,8 +336,9 @@ public class ScoreInfoDisplay : MonoBehaviourPun
 
         }
 
+        Debug.Log("Emote");
         view.RPC("Emote", RpcTarget.All, parameter, winner);
-
+        Debug.Log("Done");
     }
 
     int CalculatePrime()
@@ -360,6 +364,7 @@ public class ScoreInfoDisplay : MonoBehaviourPun
                 int.TryParse(OtherScores[i].text, out ResultB);
             }
         }
+        Debug.Log(primebar);
         return primebar;
 
     }
@@ -395,14 +400,112 @@ public class ScoreInfoDisplay : MonoBehaviourPun
     }
 
 
+    public void ZoomLowestPlayer()
+    {
+        StartCoroutine(ZoomLowestPlayerNumerator());
+    }
+
+    IEnumerator ZoomLowestPlayerNumerator()
+    {
+
+
+        secondcam.gameObject.SetActive(false);
+        camfollow.gameObject.SetActive(true);
+
+        Camera camfov = camfollow.GetComponent<Camera>();
+
+
+        //GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        int lowestPlayer= 0;
+        int lastscore;
+        int[] possiblelosers = new int[4] { -1, -1, -1, -1, } ;
+        
+        int indexl=0;
+
+        if (OtherScores[0].text != "")
+        {
+             lastscore = int.Parse(OtherScores[0].text);
+        }
+        else
+        {
+            lastscore = 0;
+        }
+       
+       
+        for (int i = 0; i < displays.Length; i++)
+        {
+            int comparison;
+            if(OtherScores[i].text != "")
+            {
+                comparison = int.Parse(OtherScores[i].text);
+
+            }
+            else
+            {
+                    comparison = 0;
+            }
+           
+            if ( displays[i].Player && comparison <= lastscore )
+            {
+                if(OtherScores[i].text != "")
+                {
+                    lastscore = int.Parse(OtherScores[i].text);
+                }
+                else
+                {
+                    lastscore = 0;
+                }
+              
+                lowestPlayer = i;
+                possiblelosers[indexl] = i;
+                indexl++;
+            }
+
+            
+
+        }
+
+     
+
+        while (camfov.fieldOfView < 70)
+        {
+            yield return null;
+            camfov.fieldOfView += 3;
+        }
+        WinnerCanvas.SetActive(false);
+
+        // camfollow.offset = new Vector3(9.39999962f, 136.100006f, -558.299988f);
+        camfollow.target = displays[lowestPlayer].Player.transform;
+        yield return new WaitForSeconds(.2f);
+        while (camfov.fieldOfView < 70)
+        {
+            yield return null;
+            camfov.fieldOfView += 1;
+        }
+        yield return new WaitForSeconds(.25f);
+        while (camfov.fieldOfView > 45)
+        {
+            yield return null;
+            camfov.fieldOfView -= 3f;
+        }
 
 
 
+
+        OtherScores[lowestPlayer].text = "99999";
+        WinnerCanvas.SetActive(true);
+
+
+    
+        EmoteExternal(true,true);
+    }
 
 
 
 IEnumerator ZoomingIn(bool realwinner)
     {
+     
         Camera camfov = camfollow.GetComponent<Camera>();
         cam.active = false;
 
@@ -534,8 +637,10 @@ IEnumerator ZoomingIn(bool realwinner)
             PlayerController controller = Player.GetComponent<PlayerController>();
 
         bool actualwinner = GetWinner();
+        Debug.Log(winner);
+        Debug.Log(actualwinner);
 
-            if (winner  && actualwinner)
+        if (winner  && actualwinner)
             {
                 switch (playerNum)
                 {

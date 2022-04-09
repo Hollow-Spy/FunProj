@@ -11,8 +11,8 @@ public class WheelSpinner : MonoBehaviourPun
     int currentSpin;
     int lastSpin;
     [SerializeField] Animator ArrowAnimator;
-    [SerializeField] GameObject Spark,ReSpinText,DeathText,CurrentCam,OGCam,backgroundobj,transitionOff, boringText,lovetext,lovebuttons ;
-    [SerializeField] SpriteRenderer wheelsprite;
+    [SerializeField] GameObject Spark,ReSpinText,DeathText,CurrentCam,OGCam,backgroundobj,transitionOff, boringText,lovetext,lovebuttons,GoldenText ;
+    [SerializeField] SpriteRenderer wheelsprite,arrowsprite;
     [SerializeField] OneVOnePicker onevoner;
 
 
@@ -88,7 +88,8 @@ public class WheelSpinner : MonoBehaviourPun
     {
         // float strengh = 199777; death
         // float strengh = 299777;  1v1
-        float strengh = 459977; 
+        //float strengh = 459977; golden point
+        float strengh = 899977;
         view.RPC("SpinALL", RpcTarget.All, strengh);
         
 
@@ -160,6 +161,7 @@ public class WheelSpinner : MonoBehaviourPun
                 yield return new WaitForSeconds(3);
                 DeathText.SetActive(false);
                 wheelsprite.enabled = false;
+                arrowsprite.enabled = false;
                 CurrentCam.SetActive(false);
                 OGCam.SetActive(true);
                 backgroundobj.SetActive(false);
@@ -191,15 +193,27 @@ public class WheelSpinner : MonoBehaviourPun
                 yield return new WaitForSeconds(6.5f);
                 transitionOff.SetActive(true);
                 break;
-
+            case 3:
+                StartCoroutine(SpeedUp(9997777 / 30));
+                GoldenText.SetActive(true);
+                yield return new WaitForSeconds(3);
+                wheelsprite.enabled = false;
+                yield return new WaitForSeconds(.5f);
+                arrowsprite.enabled = false;
+                yield return new WaitForSeconds(3);
+                transitionOff.SetActive(true);
+                break;
             case 4:
                 boringText.SetActive(true);
                 yield return new WaitForSeconds(5f);
                 transitionOff.SetActive(true);
                 break;
             case 5:
-                StartCoroutine(SpeedUp(77777 / 30));
+                wheelsprite.enabled = false;
+                arrowsprite.enabled = false;
+                backgroundobj.SetActive(false);
 
+                FindObjectOfType<ScoreInfoDisplay>().ZoomLowestPlayer();
                 break;
 
             case 6:
