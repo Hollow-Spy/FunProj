@@ -11,7 +11,7 @@ public class WheelSpinner : MonoBehaviourPun
     int currentSpin;
     int lastSpin;
     [SerializeField] Animator ArrowAnimator;
-    [SerializeField] GameObject Spark,ReSpinText,DeathText,CurrentCam,OGCam,backgroundobj,transitionOff, boringText,lovetext,lovebuttons,GoldenText ;
+    [SerializeField] GameObject Spark,ReSpinText,DeathText,CurrentCam,OGCam,backgroundobj,transitionOff, boringText,lovetext,lovebuttons,GoldenText,ActualWinnerText ;
     [SerializeField] SpriteRenderer wheelsprite,arrowsprite;
     [SerializeField] OneVOnePicker onevoner;
 
@@ -214,6 +214,9 @@ public class WheelSpinner : MonoBehaviourPun
                 backgroundobj.SetActive(false);
 
                 FindObjectOfType<ScoreInfoDisplay>().ZoomLowestPlayer();
+                ActualWinnerText.SetActive(true);
+                yield return new WaitForSeconds(4);
+                transitionOff.SetActive(true);
                 break;
 
             case 6:

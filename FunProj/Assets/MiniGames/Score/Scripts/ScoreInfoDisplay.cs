@@ -316,16 +316,20 @@ public class ScoreInfoDisplay : MonoBehaviourPun
 
     public void EmoteExternal(bool winner, bool topplayer)
     {
-        if(topplayer)
+     
+        if (topplayer)
         {
             
             bool checkwinnerr = GetWinner();
     
             if (!checkwinnerr)
             {
+                Debug.Log("shit1");
+
                 return;
             }
         }
+   
 
 
         int parameter = 0;
@@ -335,10 +339,9 @@ public class ScoreInfoDisplay : MonoBehaviourPun
             parameter = (int)PhotonNetwork.LocalPlayer.CustomProperties["playerAvatar"];
 
         }
+     
 
-        Debug.Log("Emote");
         view.RPC("Emote", RpcTarget.All, parameter, winner);
-        Debug.Log("Done");
     }
 
     int CalculatePrime()
@@ -364,7 +367,7 @@ public class ScoreInfoDisplay : MonoBehaviourPun
                 int.TryParse(OtherScores[i].text, out ResultB);
             }
         }
-        Debug.Log(primebar);
+     
         return primebar;
 
     }
@@ -497,8 +500,21 @@ public class ScoreInfoDisplay : MonoBehaviourPun
         WinnerCanvas.SetActive(true);
 
 
-    
-        EmoteExternal(true,true);
+      for(int i=0;i<displays.Length;i++)
+        {
+           
+
+            if(displays[i].Player && displays[i].Player.GetComponent<PhotonView>().IsMine)
+            {
+                displays[i].Player.GetComponent<PlayerController>().animator.Play("Idle");
+                displays[i].Player.GetComponent<PlayerController>().face.Expression("normal");
+                yield return new WaitForSeconds(.1f);
+                displays[i].EmoteExternal(true, false);
+            }
+
+          
+        }
+       
     }
 
 
@@ -628,17 +644,20 @@ IEnumerator ZoomingIn(bool realwinner)
     [PunRPC]
         void Emote(int playerNum, bool winner)
         {
-            if (!Player)
+      
+
+
+        if (!Player)
             {
                 return;
             }
-      
+       
 
-            PlayerController controller = Player.GetComponent<PlayerController>();
+
+        PlayerController controller = Player.GetComponent<PlayerController>();
 
         bool actualwinner = GetWinner();
-        Debug.Log(winner);
-        Debug.Log(actualwinner);
+        
 
         if (winner  && actualwinner)
             {
@@ -675,9 +694,13 @@ IEnumerator ZoomingIn(bool realwinner)
 
                         break;
                     case 1:
-                        break;
+                    controller.animator.Play("UpsetEmoteNatasha");  
+                    break;
                     case 2:
-                        break;
+                    controller.animator.Play("SamSadEmote");
+                    controller.face.Expression("angry");
+
+                    break;
                 }
             }
 

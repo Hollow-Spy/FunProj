@@ -79,6 +79,7 @@ public class FaceExpressions : MonoBehaviour
     {
         animator.SetBool("expressing", true);
 
+        animator.SetBool("happy", false);
         animator.SetBool("sad", false);
         animator.SetBool("suprised", false);
         animator.SetBool("sus", false);
