@@ -402,6 +402,17 @@ public class ScoreInfoDisplay : MonoBehaviourPun
       
     }
 
+    public void PlayThroneWinner()
+    {
+        for(int i=0;i<displays.Length;i++)
+        {
+            bool winner = displays[i].GetWinner();
+            if(winner)
+            {
+                displays[i].Player.GetComponent<PlayerController>().animator.Play("QueenSit");
+            }
+        }
+    }
 
     public void ZoomLowestPlayer()
     {

@@ -11,7 +11,7 @@ public class WheelSpinner : MonoBehaviourPun
     int currentSpin;
     int lastSpin;
     [SerializeField] Animator ArrowAnimator;
-    [SerializeField] GameObject Spark,ReSpinText,DeathText,CurrentCam,OGCam,backgroundobj,transitionOff, boringText,lovetext,lovebuttons,GoldenText,ActualWinnerText ;
+    [SerializeField] GameObject Spark,ReSpinText,DeathText,CurrentCam,OGCam,backgroundobj,transitionOff, boringText,lovetext,lovebuttons,GoldenText,ActualWinnerText,WinnerCanvas,InstaWin,ThroneCanvas ;
     [SerializeField] SpriteRenderer wheelsprite,arrowsprite;
     [SerializeField] OneVOnePicker onevoner;
 
@@ -86,10 +86,11 @@ public class WheelSpinner : MonoBehaviourPun
 
     public void customSpin()
     {
-        // float strengh = 199777; death
-        // float strengh = 299777;  1v1
-        //float strengh = 459977; golden point
-        float strengh = 899977;
+        // float strengh = 199777;// death
+        // float strengh = 299777;  //1v1
+        //float strengh = 459977; //golden point
+        //float strengh = 899977; //loser wins
+        float strengh = 1409977;//[pure winner
         view.RPC("SpinALL", RpcTarget.All, strengh);
         
 
@@ -223,7 +224,7 @@ public class WheelSpinner : MonoBehaviourPun
                 ReSpinText.SetActive(true);
                 yield return new WaitForSeconds(1.3f);
                 ReSpinText.SetActive(false);
-
+            
 
 
               
@@ -233,7 +234,23 @@ public class WheelSpinner : MonoBehaviourPun
                 }
 
                 break;
+            case 7:
+                OGCam.SetActive(true);
+                CurrentCam.SetActive(false);
+                backgroundobj.SetActive(false);
+                wheelsprite.enabled = false;
+                arrowsprite.enabled = false;
 
+
+                WinnerCanvas.SetActive(true);
+                yield return new WaitForSeconds(2);
+
+                InstaWin.SetActive(true);
+                ThroneCanvas.SetActive(true);
+                FindObjectOfType<ScoreInfoDisplay>().PlayThroneWinner();
+
+
+                break;
 
         }
     }
