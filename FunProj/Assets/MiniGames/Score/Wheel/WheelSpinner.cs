@@ -11,11 +11,11 @@ public class WheelSpinner : MonoBehaviourPun
     int currentSpin;
     int lastSpin;
     [SerializeField] Animator ArrowAnimator;
-    [SerializeField] GameObject Spark,ReSpinText,DeathText,CurrentCam,OGCam,backgroundobj,transitionOff, boringText,lovetext,lovebuttons,GoldenText,ActualWinnerText,WinnerCanvas,InstaWin,ThroneCanvas ;
+    [SerializeField] GameObject Spark,ReSpinText,DeathText,CurrentCam,OGCam,backgroundobj,transitionOff, boringText,lovetext,lovebuttons,GoldenText,ActualWinnerText,WinnerCanvas,InstaWin,ThroneCanvas,OneVThreeCam ;
     [SerializeField] SpriteRenderer wheelsprite,arrowsprite;
     [SerializeField] OneVOnePicker onevoner;
-
-
+    [SerializeField] Transform[] OneVThreePos;
+    [SerializeField] ScoreInfoDisplay scoredisplay0;
     private void Start()
     {
         WheelBody = GetComponent<Rigidbody2D>();
@@ -90,7 +90,8 @@ public class WheelSpinner : MonoBehaviourPun
         // float strengh = 299777;  //1v1
         //float strengh = 459977; //golden point
         //float strengh = 899977; //loser wins
-        float strengh = 1409977;//[pure winner
+        // float strengh = 1409977;//[pure winner
+        float strengh = 1639977; // 1v3
         view.RPC("SpinALL", RpcTarget.All, strengh);
         
 
@@ -248,7 +249,31 @@ public class WheelSpinner : MonoBehaviourPun
                 InstaWin.SetActive(true);
                 ThroneCanvas.SetActive(true);
                 FindObjectOfType<ScoreInfoDisplay>().PlayThroneWinner();
+                break;
+            case 8:
 
+                int playerAmout = PhotonNetwork.CurrentRoom.PlayerCount;
+                int winnerindex = FindObjectOfType<ScoreInfoDisplay>().GetWinnerIndex();
+
+
+                GameObject playerw = scoredisplay0.ReturnPlayerObject(winnerindex);
+                playerw.transform.position = OneVThreePos[0].position;
+                int transformindex=1;
+                /*  for(int i =0;i<playerAmout;i++)
+                  {
+                      if(winnerindex != i && scoredisplay0.DoesPlayerExist(i))
+                      {
+                          GameObject cplayer = scoredisplay0.ReturnPlayerObject(i);
+                          cplayer.transform.position = OneVThreePos[transformindex].position;
+                          transformindex++;
+                      }
+                  }
+      */
+                OneVThreeCam.SetActive(true);
+                OGCam.SetActive(false);
+                wheelsprite.enabled = false;
+                arrowsprite.enabled = false;
+                backgroundobj.SetActive(false);
 
                 break;
 

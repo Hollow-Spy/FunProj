@@ -574,6 +574,45 @@ IEnumerator ZoomingIn(bool realwinner)
 
     }
 
+
+
+    public GameObject ReturnPlayerObject(int index)
+    {
+        return displays[index].Player;
+    }
+
+    public bool DoesPlayerExist(int index)
+    {
+        if(displays[index].Player)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+
+        }
+    }
+
+
+    public int GetWinnerIndex()
+    {
+        int index = 0;
+       for(int i=0;i<displays.Length;i++)
+        {
+            if (displays[i].Player && displays[i].GetWinner())
+            {
+                index = i;
+            }
+        }
+
+        return index;
+
+    }
+
+
+
+
     IEnumerator WinnerNumerator()
     {
         yield return new WaitForSeconds(.3f);
