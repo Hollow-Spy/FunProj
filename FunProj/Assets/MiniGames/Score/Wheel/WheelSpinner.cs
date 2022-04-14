@@ -257,20 +257,28 @@ public class WheelSpinner : MonoBehaviourPun
 
 
                 GameObject playerw = scoredisplay0.ReturnPlayerObject(winnerindex);
+                playerw.GetComponent<PlayerController>().animator.SetBool("idle", false);
+                playerw.GetComponent<PlayerController>().animator.SetBool("run", true);
+                playerw.GetComponent<PlayerController>().animator.Play("Run");
+
                 playerw.transform.position = OneVThreePos[0].position;
                 int transformindex=1;
-                /*  for(int i =0;i<playerAmout;i++)
+                 for(int i =0;i<playerAmout;i++)
                   {
-                      if(winnerindex != i && scoredisplay0.DoesPlayerExist(i))
-                      {
-                          GameObject cplayer = scoredisplay0.ReturnPlayerObject(i);
+                    Debug.Log(i);
+;                      if(winnerindex != i && scoredisplay0.DoesPlayerExist(i))
+                    {
+                        Debug.Log("hi");
+
+                        GameObject cplayer = scoredisplay0.ReturnPlayerObject(i);
                           cplayer.transform.position = OneVThreePos[transformindex].position;
                           transformindex++;
                       }
                   }
-      */
+      
                 OneVThreeCam.SetActive(true);
                 OGCam.SetActive(false);
+                CurrentCam.SetActive(false);
                 wheelsprite.enabled = false;
                 arrowsprite.enabled = false;
                 backgroundobj.SetActive(false);

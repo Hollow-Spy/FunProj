@@ -34,8 +34,11 @@ public class ScoreInfoDisplay : MonoBehaviourPun
     [SerializeField] GameObject WinnerCanvas;
 
     [SerializeField] Transform OGCamPos;
+    int playerAmout;
     private void Start()
     {
+        playerAmout = PhotonNetwork.CurrentRoom.PlayerCount;
+        Debug.Log(playerAmout);
         Time.timeScale = 1;
 
         ScaleBarImg = BarTransform.GetComponentInChildren<Image>();
@@ -546,13 +549,13 @@ IEnumerator ZoomingIn(bool realwinner)
         while (camfov.fieldOfView < 70)
         {
             yield return null;
-            camfov.fieldOfView += 1;
+            camfov.fieldOfView += 1 ;
         }
         yield return new WaitForSeconds(.25f);
         while (camfov.fieldOfView > 45)
         {
             yield return null;
-            camfov.fieldOfView -= 3f;
+            camfov.fieldOfView -= 3f ;
         }
 
         if(realwinner)
