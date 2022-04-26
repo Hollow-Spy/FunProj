@@ -97,8 +97,6 @@ public class ScoreInfoDisplay : MonoBehaviourPun
     [PunRPC]
     void SetBar(int score, float BarSpeed, bool FastSlow)
     {
-
-
         if (FastSlow)
         {
             StartCoroutine(RiseBarFastNumerator(score, BarSpeed));

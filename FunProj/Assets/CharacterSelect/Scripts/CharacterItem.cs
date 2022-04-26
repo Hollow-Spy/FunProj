@@ -42,6 +42,9 @@ public class CharacterItem : MonoBehaviourPunCallbacks
         {
             playerProperties["playerAvatar"] = (int)playerProperties["playerAvatar"] + 1;
         }
+
+      
+
         PhotonNetwork.SetPlayerCustomProperties(playerProperties);
     }
 
@@ -60,7 +63,10 @@ public class CharacterItem : MonoBehaviourPunCallbacks
     }
     void UpdateCharacterItem(Player player)
     {
-        if(player.CustomProperties.ContainsKey("playerAvatar"))
+        playerProperties["OldScore"] = 0;
+        playerProperties["NewScore"] = 0;
+
+        if (player.CustomProperties.ContainsKey("playerAvatar"))
         {
             playerAvatar.sprite = avatars[(int)player.CustomProperties["playerAvatar"]];
             playerProperties["playerAvatar"] = (int)player.CustomProperties["playerAvatar"];
