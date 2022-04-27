@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 
-public class ScoreCounter : MonoBehaviourPun
+public class ScoreCounter : MonoBehaviourPunCallbacks
 {
     bool Counting;
     GameObject Player;
@@ -15,18 +16,29 @@ public class ScoreCounter : MonoBehaviourPun
     [SerializeField] GameObject TimeCanvas,TransitionCanvas;
     PhotonView view;
 
+   // ExitGames.Client.Photon.Hashtable playerProperties = new ExitGames.Client.Photon.Hashtable();
+
     int initialScore;
 
     float TransitionTime=1;
 
    [SerializeField] bool DyingRemovesScore;
 
+  
+
     void Start()
     {
-        
+       /* 
+         PhotonNetwork.LocalPlayer.CustomProperties["NewScore"]); Get the property
+        var hash = PhotonNetwork.LocalPlayer.CustomProperties;    get the hash or package with all info attached to local player
+        hash["NewScore"] = 100;       set a variables value
+        PhotonNetwork.LocalPlayer.SetCustomProperties(hash);     upload it 
+      
+        */
         initialScore = 0;
-
         view = GetComponent<PhotonView>();
+        
+
         Players = GameObject.FindGameObjectsWithTag("Player");
         for(int i = 0;i< Players.Length;i++)
         {
@@ -37,8 +49,10 @@ public class ScoreCounter : MonoBehaviourPun
             }
 
         }
+       
+
         playersAlive = PhotonNetwork.CurrentRoom.PlayerCount;
-        Debug.Log(playersAlive);
+       
 
         StartCoroutine( ScoreIncrease() );
     }
@@ -60,6 +74,7 @@ public class ScoreCounter : MonoBehaviourPun
     {
         PhotonView theview=null;
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
         for(int i=0;i<players.Length;i++)
         {
             if(players[i].GetComponent<PhotonView>().IsMine)
@@ -72,11 +87,13 @@ public class ScoreCounter : MonoBehaviourPun
         if(theview.IsMine)
         {
             playersAlive--;
-            Debug.Log(playersAlive);
+          
             if (DyingRemovesScore && playersAlive > 0 && theview.GetComponent<PlayerController>().is_dead)
             {
-
-                PlayerPrefs.SetInt("NewScore", 0);
+                var hash = PhotonNetwork.LocalPlayer.CustomProperties;
+                hash["NewScore"] = 0;
+                //PlayerPrefs.SetInt("NewScore", 0);
+                PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
             }
 
             if (maxPlayersAliveAllowed >= playersAlive)
@@ -119,7 +136,12 @@ public class ScoreCounter : MonoBehaviourPun
         {
            
             initialScore += ScorePerSecond;
-            PlayerPrefs.SetInt("NewScore", initialScore);
+
+            var hash = PhotonNetwork.LocalPlayer.CustomProperties;
+            hash["NewScore"] = initialScore;
+           
+            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+           
             yield return new WaitForSeconds(1);
 
         }

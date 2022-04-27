@@ -38,7 +38,7 @@ public class ScoreInfoDisplay : MonoBehaviourPun
     private void Start()
     {
         playerAmout = PhotonNetwork.CurrentRoom.PlayerCount;
-        Debug.Log(playerAmout);
+       
         Time.timeScale = 1;
 
         ScaleBarImg = BarTransform.GetComponentInChildren<Image>();
@@ -49,6 +49,17 @@ public class ScoreInfoDisplay : MonoBehaviourPun
         camfollow = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ProportionalCamera>();
         view = GetComponent<PhotonView>();
+
+
+
+        //here!
+
+        Debug.Log(PhotonNetwork.LocalPlayer.CustomProperties["NewScore"]);
+      
+
+
+
+
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

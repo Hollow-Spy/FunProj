@@ -16,8 +16,14 @@ public class CharacterItem : MonoBehaviourPunCallbacks
 
     Player player;
 
+    private void Start()
+    {
+       playerProperties["OldScore"] = 0;
+        playerProperties["NewScore"] = 0;
 
- 
+        PhotonNetwork.SetPlayerCustomProperties(playerProperties);
+    }
+
     public void LeftArrowClick()
     {
         if((int)playerProperties["playerAvatar"] == 0 )
@@ -63,8 +69,7 @@ public class CharacterItem : MonoBehaviourPunCallbacks
     }
     void UpdateCharacterItem(Player player)
     {
-        playerProperties["OldScore"] = 0;
-        playerProperties["NewScore"] = 0;
+      
 
         if (player.CustomProperties.ContainsKey("playerAvatar"))
         {
