@@ -26,8 +26,8 @@ public class CreateNJoinRooms : MonoBehaviourPunCallbacks
 
     public GameObject StartButton;
 
-    
 
+    [SerializeField] bool DisableStart;
 
 
     [SerializeField] GameObject PlayerListing;
@@ -134,8 +134,11 @@ public class CreateNJoinRooms : MonoBehaviourPunCallbacks
     }
     private void Start()
     {
-        UpdateList(roomListt);
-        UpdateCharacterList();
+        if(!DisableStart)
+        {
+            UpdateList(roomListt);
+            UpdateCharacterList();
+        }
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)

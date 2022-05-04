@@ -10,7 +10,7 @@ public class ScoreInfoDisplay : MonoBehaviourPun
     [SerializeField] Text scoreText;
     PhotonView view;
     [SerializeField] Transform BarTransform;
-    [SerializeField] float maxScore;
+    [SerializeField] int maxScore;
     [SerializeField] float maxBarScale;
     [SerializeField] float oldScoreBarSpeed;
     [SerializeField] ScoreInfoDisplay[] displays;
@@ -35,38 +35,51 @@ public class ScoreInfoDisplay : MonoBehaviourPun
 
     [SerializeField] Transform OGCamPos;
     int playerAmout;
+
+    int OldScore;
+    int NewScore;
+    
+
+    
     private void Start()
     {
+      
         playerAmout = PhotonNetwork.CurrentRoom.PlayerCount;
        
-        Time.timeScale = 1;
-
-        ScaleBarImg = BarTransform.GetComponentInChildren<Image>();
-        ScaleBarImg.color = new Color(ScaleBarImg.color.r, ScaleBarImg.color.g, ScaleBarImg.color.b, 0);
+       Time.timeScale = 1;
+       
+      ScaleBarImg = BarTransform.GetComponentInChildren<Image>(); 
+      ScaleBarImg.color = new Color(ScaleBarImg.color.r, ScaleBarImg.color.g, ScaleBarImg.color.b, 0);
         scoreText.text = "";
         nameText.text = "";
 
         camfollow = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
-        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ProportionalCamera>();
+        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ProportionalCamera>();  
         view = GetComponent<PhotonView>();
 
 
 
         //here!
 
-        Debug.Log(PhotonNetwork.LocalPlayer.CustomProperties["NewScore"]);
+        Debug.Log(PhotonNetwork.PlayerList[0].CustomProperties["NewScore"]);
       
 
 
-
-
     }
+
+  
+   
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
-
+      
+       // Debug.Log(PhotonNetwork.LocalPlayer.CustomProperties["OldScore"]);
+       
         if (collision.CompareTag("Player"))
         {
+          
+
+
             ScaleBarImg.color = new Color(ScaleBarImg.color.r, ScaleBarImg.color.g, ScaleBarImg.color.b, 1);
             Player = collision.gameObject;
 
@@ -76,14 +89,18 @@ public class ScoreInfoDisplay : MonoBehaviourPun
                 // PlayerPrefs.SetInt("OldScore", 3000);
                 //  PlayerPrefs.SetInt("NewScore", Random.Range(4000, 10000));
 
-               
 
+              
+
+               
 
                 view.RPC("SetBar", RpcTarget.All, PlayerPrefs.GetInt("OldScore"), oldScoreBarSpeed, false);
 
             }
 
         }
+
+       
     }
 
     
@@ -96,18 +113,19 @@ public class ScoreInfoDisplay : MonoBehaviourPun
 
     public void SetNewBar()
     {
-        if (Player && Player.GetComponent<PhotonView>().IsMine)
+      /*  if (Player && Player.GetComponent<PhotonView>().IsMine)
         {
           
             view.RPC("SetBar", RpcTarget.All, PlayerPrefs.GetInt("NewScore") + PlayerPrefs.GetInt("OldScore"), oldScoreBarSpeed * .75f, true);
 
-        }
+        }*/
     }
 
 
     [PunRPC]
     void SetBar(int score, float BarSpeed, bool FastSlow)
     {
+        /*
         if (FastSlow)
         {
             StartCoroutine(RiseBarFastNumerator(score, BarSpeed));
@@ -117,12 +135,13 @@ public class ScoreInfoDisplay : MonoBehaviourPun
         {
             StartCoroutine(RiseBarNumerator(score, BarSpeed));
         }
-
+        */
     }
     //Normal
     IEnumerator RiseBarNumerator(int score, float BarSpeed)
     {
-
+        yield return null;
+        /*
         if(score > 0)
         {
 
@@ -322,13 +341,13 @@ public class ScoreInfoDisplay : MonoBehaviourPun
 
 
 
-
+        */
     }
 
 
     public void EmoteExternal(bool winner, bool topplayer)
     {
-     
+     /*
         if (topplayer)
         {
             
@@ -381,15 +400,16 @@ public class ScoreInfoDisplay : MonoBehaviourPun
         }
      
         return primebar;
-
+     */
     }
 
     private void Update()
     {
 
 
-        
-        if(ready3)
+        Debug.Log(PhotonNetwork.PlayerList[0].CustomProperties["NewScore"]);
+        /*
+        if (ready3)
         {
            bool allReady = true;
             for (int i = 0; i < displays.Length; i++)
@@ -411,7 +431,7 @@ public class ScoreInfoDisplay : MonoBehaviourPun
 
             }
         }
-      
+      */
     }
 
     public void PlayThroneWinner()
@@ -544,6 +564,8 @@ public class ScoreInfoDisplay : MonoBehaviourPun
 
 IEnumerator ZoomingIn(bool realwinner)
     {
+        yield return null;
+        /*
      
         Camera camfov = camfollow.GetComponent<Camera>();
         cam.active = false;
@@ -583,7 +605,7 @@ IEnumerator ZoomingIn(bool realwinner)
         }
 
       
-
+        */
     }
 
 
@@ -649,6 +671,7 @@ IEnumerator ZoomingIn(bool realwinner)
 
     public void ActivateButtons()
     {
+        /*
         int primebar = CalculatePrime();
 
 
@@ -657,7 +680,7 @@ IEnumerator ZoomingIn(bool realwinner)
 
             WheelButtons.SetActive(true);
         }
-
+        */
     }
 
     public void killWinner()
@@ -672,6 +695,8 @@ IEnumerator ZoomingIn(bool realwinner)
 
     public bool GetWinnerView()
     {
+        return false;
+        /*
         int primebar = CalculatePrime();
 
         if (OtherBars[primebar] == BarTransform && Player.GetComponent<PhotonView>().IsMine)
@@ -683,10 +708,12 @@ IEnumerator ZoomingIn(bool realwinner)
         {
             return false;
         }
+        */
     }
 
     public bool GetWinner()
     {
+        /*
         int primebar = CalculatePrime();
 
         if (OtherBars[primebar] == BarTransform)
@@ -698,6 +725,8 @@ IEnumerator ZoomingIn(bool realwinner)
         {
             return false;
         }
+        */
+        return false;
     }
 
 
