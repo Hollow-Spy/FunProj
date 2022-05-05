@@ -263,6 +263,9 @@ public class WheelSpinner : MonoBehaviourPun
 
                 playerw.transform.position = OneVThreePos[0].position;
                 int transformindex=1;
+
+                GameObject[] NonWinnerPlayers = new GameObject[playerAmout];
+                int NonWinnerIndex=0;
                  for(int i =0;i<playerAmout;i++)
                   {
                     Debug.Log(i);
@@ -272,6 +275,10 @@ public class WheelSpinner : MonoBehaviourPun
 
                         GameObject cplayer = scoredisplay0.ReturnPlayerObject(i);
                           cplayer.transform.position = OneVThreePos[transformindex].position;
+                        cplayer.transform.eulerAngles = new Vector3(0, 180, 0);
+                        NonWinnerPlayers[NonWinnerIndex] = cplayer;
+                        NonWinnerIndex++;
+
                           transformindex++;
                       }
                   }
@@ -282,6 +289,16 @@ public class WheelSpinner : MonoBehaviourPun
                 wheelsprite.enabled = false;
                 arrowsprite.enabled = false;
                 backgroundobj.SetActive(false);
+
+                for(int c =0;c < NonWinnerPlayers.Length;c++)
+                {
+                    yield return new WaitForSeconds(1.3f);
+                  //  NonWinnerPlayers[c].GetComponent<Animator>().
+                }
+
+                yield return new WaitForSeconds(3.3f);
+
+                OneVThreeCam.GetComponent<Animator>().Play("SpotLightReverseAnim");
 
                 break;
 
