@@ -264,7 +264,7 @@ public class WheelSpinner : MonoBehaviourPun
                 playerw.transform.position = OneVThreePos[0].position;
                 int transformindex=1;
 
-                GameObject[] NonWinnerPlayers = new GameObject[playerAmout];
+                GameObject[] NonWinnerPlayers = new GameObject[playerAmout-1];
                 int NonWinnerIndex=0;
                  for(int i =0;i<playerAmout;i++)
                   {
@@ -289,17 +289,36 @@ public class WheelSpinner : MonoBehaviourPun
                 wheelsprite.enabled = false;
                 arrowsprite.enabled = false;
                 backgroundobj.SetActive(false);
+                yield return new WaitForSeconds(1.6f);
+                playerw.GetComponent<PlayerController>().animator.SetBool("idle", true);
+                playerw.GetComponent<PlayerController>().animator.SetBool("run", false) ;
+             
+                playerw.GetComponentInChildren<FaceExpressions>().Expression("suprised");
 
-                for(int c =0;c < NonWinnerPlayers.Length;c++)
+              
+                for (int c =0;c < NonWinnerPlayers.Length;c++)
                 {
-                    yield return new WaitForSeconds(1.3f);
-                  //  NonWinnerPlayers[c].GetComponent<Animator>().
+                    yield return new WaitForSeconds(.5f);
+                    switch(c)
+                    {
+                        case 0:
+                            NonWinnerPlayers[c].GetComponent<PlayerController>().animator.Play("Angry1v3One");
+                            break;
+                        case 1:
+                            NonWinnerPlayers[c].GetComponent<PlayerController>().animator.Play("Angry1v3Two");
+                            break;
+                        case 2:
+                            NonWinnerPlayers[c].GetComponent<PlayerController>().animator.Play("Angry1v3Three");
+                            break;
+                    }
+                  
                 }
 
-                yield return new WaitForSeconds(3.3f);
+                yield return new WaitForSeconds(1.5f);
 
                 OneVThreeCam.GetComponent<Animator>().Play("SpotLightReverseAnim");
-
+                yield return new WaitForSeconds(2f);
+                transitionOff.SetActive(true);
                 break;
 
         }
