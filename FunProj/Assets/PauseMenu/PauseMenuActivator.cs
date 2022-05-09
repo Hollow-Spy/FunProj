@@ -7,6 +7,13 @@ public class PauseMenuActivator : MonoBehaviour
 
     [SerializeField] GameObject PauseMenu;
     [SerializeField] GameObject OnSound, OffSound;
+
+    private void Awake()
+    {
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 60;
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))

@@ -291,6 +291,8 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
        
     }
 
+    
+
     void OnDrawGizmos()
     {/*
         Gizmos.color = Color.red;
