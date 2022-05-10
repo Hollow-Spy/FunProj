@@ -5457,7 +5457,7 @@ Animator:
   m_GameObject: {fileID: 2832665578727538976}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 63aa2081e19380f4c94329e3ff0b5fa7, type: 2}
+  m_Controller: {fileID: 9100000, guid: 69b76e48341945f4dadfb8379be700c6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -5513,34 +5513,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters:
-  - Type: 4
-    SynchronizeType: 1
-    Name: run
-  - Type: 9
-    SynchronizeType: 0
-    Name: jump
-  - Type: 4
-    SynchronizeType: 1
-    Name: airborne
-  - Type: 4
-    SynchronizeType: 1
-    Name: idle
-  - Type: 4
-    SynchronizeType: 1
-    Name: crouch
-  - Type: 4
-    SynchronizeType: 1
-    Name: nod
-  - Type: 4
-    SynchronizeType: 1
-    Name: knockout
-  - Type: 1
-    SynchronizeType: 1
-    Name: spinspeed
-  - Type: 4
-    SynchronizeType: 1
-    Name: spin
+  m_SynchronizeParameters: []
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
