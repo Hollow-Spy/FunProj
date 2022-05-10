@@ -790,7 +790,13 @@ IEnumerator ZoomingIn(bool realwinner)
                     controller.animator.Play("HappyDioAnim");
                     controller.face.Expression("happy");
                     break;
-                }
+
+                case 4:
+                    controller.animator.Play("HappyEli");
+                    controller.face.Expression("happy");
+                    break;
+            
+            }
             }
             else
             {
@@ -816,7 +822,12 @@ IEnumerator ZoomingIn(bool realwinner)
                     controller.animator.Play("UpsetDioAnim");
                     controller.face.Expression("angry");
                     break;
-                }
+
+                case 4:
+                    controller.animator.Play("SadEliEmote");
+                    controller.face.Expression("angry");
+                    break;
+            }
             }
 
 
