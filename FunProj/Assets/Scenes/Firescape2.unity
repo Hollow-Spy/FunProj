@@ -66756,6 +66756,8 @@ MonoBehaviour:
   - {fileID: 6006062540075243596, guid: 3515aaab6737ce648922b17248b73f99, type: 3}
   - {fileID: 6006062540075243596, guid: ee658523b95f8cb4abf48951f68f4871, type: 3}
   - {fileID: 6549644424875957968, guid: ea128a5a45312224690b81b9e38ed613, type: 3}
+  - {fileID: 6549644424875957968, guid: 80688fa0a43b4ce4386ad327d2e235d9, type: 3}
+  - {fileID: 6549644424875957968, guid: 75690e75b6c3d1d40b7d1b5292cf8773, type: 3}
   GameStarter: {fileID: 1712926018}
   CountDown: {fileID: 641516390}
   spawnPositions:

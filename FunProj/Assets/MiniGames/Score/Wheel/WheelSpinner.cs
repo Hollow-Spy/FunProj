@@ -86,12 +86,13 @@ public class WheelSpinner : MonoBehaviourPun
 
     public void customSpin()
     {
+        float strengh = 100;// love
         // float strengh = 199777;// death
         // float strengh = 299777;  //1v1
         //float strengh = 459977; //golden point
         //float strengh = 899977; //loser wins
         // float strengh = 1409977;//[pure winner
-        float strengh = 1639977; // 1v3
+      //  float strengh = 1639977; // 1v3
         view.RPC("SpinALL", RpcTarget.All, strengh);
         
 
@@ -138,9 +139,10 @@ public class WheelSpinner : MonoBehaviourPun
         {
             case 0:
                 lovetext.SetActive(true);
-                yield return new WaitForSeconds(4);
+                yield return new WaitForSeconds(4.5f);
                 backgroundobj.SetActive(false);
                 wheelsprite.enabled = false;
+                arrowsprite.enabled = false;
                 lovetext.SetActive(false);
 
                 bool check=false;
@@ -155,7 +157,11 @@ public class WheelSpinner : MonoBehaviourPun
                     }
                 }
 
-              
+                yield return new WaitForSeconds(11);
+                if(PhotonNetwork.IsMasterClient)
+                {
+                   PhotonNetwork.LoadLevel("CharacterSelect");
+                }
 
                 break;
             case 1:

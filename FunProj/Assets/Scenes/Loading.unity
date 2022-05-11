@@ -1400,9 +1400,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6486200190709083221, guid: 0eef257633006974bbcd1efe039a21c9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6486200191405202036, guid: 0eef257633006974bbcd1efe039a21c9, type: 3}
       propertyPath: m_Name
       value: PauseMenuCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 6486200191405202036, guid: 0eef257633006974bbcd1efe039a21c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6486200191405202040, guid: 0eef257633006974bbcd1efe039a21c9, type: 3}
       propertyPath: m_Pivot.x
