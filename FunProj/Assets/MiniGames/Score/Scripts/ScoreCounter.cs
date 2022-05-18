@@ -12,7 +12,7 @@ public class ScoreCounter : MonoBehaviourPunCallbacks
     PlayerController controller;
     [SerializeField] int ScorePerSecond;
     [SerializeField] int maxPlayersAliveAllowed;
-    int playersAlive;
+   public int playersAlive;
     [SerializeField] GameObject TimeCanvas,TransitionCanvas;
     PhotonView view;
 
@@ -37,8 +37,9 @@ public class ScoreCounter : MonoBehaviourPunCallbacks
         */
         initialScore = 0;
         view = GetComponent<PhotonView>();
-        
 
+      
+    
         Players = GameObject.FindGameObjectsWithTag("Player");
         for(int i = 0;i< Players.Length;i++)
         {
@@ -49,13 +50,15 @@ public class ScoreCounter : MonoBehaviourPunCallbacks
             }
 
         }
-       
 
-        playersAlive = PhotonNetwork.CurrentRoom.PlayerCount;
+
+        playersAlive = FindObjectOfType<SpawnPlayers>().necessaryplayers;
        
 
         StartCoroutine( ScoreIncrease() );
     }
+
+
 
 
     public void StopCount()

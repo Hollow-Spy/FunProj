@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-public class LoveShower : MonoBehaviourPun
+using Photon.Realtime;
+public class LoveShower : MonoBehaviourPunCallbacks
 {
     PhotonView view;
    [SerializeField] ScoreInfoDisplay[] displays;
@@ -10,8 +11,8 @@ public class LoveShower : MonoBehaviourPun
 
     [SerializeField] GameObject OldCamObj, NewCamObj,TransitionOff,WheelPinkBackground;
     [SerializeField] Animator PosAnimator;
-   
-    
+
+    [SerializeField] bool OneVOne;
 
     private void Start()
     {
@@ -56,6 +57,35 @@ public class LoveShower : MonoBehaviourPun
         TransitionOff.SetActive(false);
         OldCamObj.SetActive(false);
         NewCamObj.SetActive(true);
+
+
+        yield return new WaitForSeconds(4f);
+
+        if (OneVOne && PhotonNetwork.IsMasterClient)
+        {
+            var hash = PhotonNetwork.MasterClient.CustomProperties;
+            hash["OneVOne"] = true;
+            hash["Player1"] = windex;
+           hash["Player2"] = index;
+
+            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+
+
+
+
+
+            Player[] players = PhotonNetwork.PlayerList;
+            Debug.Log(players[windex].NickName);
+            Debug.Log(players[index].NickName);
+         
+          //  PlayerPrefs.SetInt("WinnerIndex", windex);
+           // PlayerPrefs.SetInt("ChallengerIndex", index);
+
+            PhotonNetwork.LoadLevel("TrainGame1");
+
+
+        }
+
     }
 
 }

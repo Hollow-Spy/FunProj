@@ -18,6 +18,9 @@ public class WheelSpinner : MonoBehaviourPun
     [SerializeField] ScoreInfoDisplay scoredisplay0;
     private void Start()
     {
+       
+
+
         WheelBody = GetComponent<Rigidbody2D>();
         view = GetComponent<PhotonView>();
     }
@@ -86,9 +89,9 @@ public class WheelSpinner : MonoBehaviourPun
 
     public void customSpin()
     {
-        float strengh = 100;// love
+       // float strengh = 100;// love
         // float strengh = 199777;// death
-        // float strengh = 299777;  //1v1
+         float strengh = 299777;  //1v1
         //float strengh = 459977; //golden point
         //float strengh = 899977; //loser wins
         // float strengh = 1409977;//[pure winner
@@ -134,6 +137,10 @@ public class WheelSpinner : MonoBehaviourPun
     {
         ScoreInfoDisplay[] scoredisplays = GameObject.FindObjectsOfType<ScoreInfoDisplay>();
 
+        
+        var hash = PhotonNetwork.MasterClient.CustomProperties;
+        hash["WheelUsed"] = true;
+        PhotonNetwork.MasterClient.SetCustomProperties(hash);
         yield return null;
         switch(currentSpin)
         {
@@ -192,7 +199,11 @@ public class WheelSpinner : MonoBehaviourPun
                
 
                 transitionOff.SetActive(true);
-
+                yield return new WaitForSeconds(3);
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PhotonNetwork.LoadLevel("CharacterSelect");
+                }
 
                 break;
 
@@ -225,6 +236,11 @@ public class WheelSpinner : MonoBehaviourPun
                 ActualWinnerText.SetActive(true);
                 yield return new WaitForSeconds(4);
                 transitionOff.SetActive(true);
+                yield return new WaitForSeconds(2);
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PhotonNetwork.LoadLevel("CharacterSelect");
+                }
                 break;
 
             case 6:
@@ -255,6 +271,12 @@ public class WheelSpinner : MonoBehaviourPun
                 InstaWin.SetActive(true);
                 ThroneCanvas.SetActive(true);
                 FindObjectOfType<ScoreInfoDisplay>().PlayThroneWinner();
+                yield return new WaitForSeconds(4);
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PhotonNetwork.LoadLevel("CharacterSelect");
+                }
+
                 break;
             case 8:
 

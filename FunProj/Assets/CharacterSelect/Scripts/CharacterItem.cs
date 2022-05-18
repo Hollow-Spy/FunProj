@@ -20,6 +20,11 @@ public class CharacterItem : MonoBehaviourPunCallbacks
     {
        playerProperties["OldScore"] = 0;
         playerProperties["NewScore"] = 0;
+        playerProperties["WheelUsed"] = false;
+        playerProperties["OneVOne"] = false;
+        playerProperties["Player1"] = -1;
+        playerProperties["Player2"] = -1;
+
 
         PhotonNetwork.SetPlayerCustomProperties(playerProperties);
     }

@@ -5513,7 +5513,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters: []
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 1
+    Name: run
+  - Type: 9
+    SynchronizeType: 1
+    Name: jump
+  - Type: 4
+    SynchronizeType: 1
+    Name: airborne
+  - Type: 4
+    SynchronizeType: 1
+    Name: idle
+  - Type: 4
+    SynchronizeType: 1
+    Name: crouch
+  - Type: 4
+    SynchronizeType: 1
+    Name: nod
+  - Type: 4
+    SynchronizeType: 1
+    Name: knockout
+  - Type: 1
+    SynchronizeType: 1
+    Name: spinspeed
+  - Type: 4
+    SynchronizeType: 1
+    Name: spin
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0

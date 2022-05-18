@@ -846,11 +846,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: ScoreCounter
       objectReference: {fileID: 0}
+    - target: {fileID: 1562051087075453912, guid: d65469fee6083d243912e1ed4ec11d67, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d65469fee6083d243912e1ed4ec11d67, type: 3}
 --- !u!4 &218256544 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1562051087075453911, guid: d65469fee6083d243912e1ed4ec11d67, type: 3}
+  m_PrefabInstance: {fileID: 218256543}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &218256545 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1562051087075453912, guid: d65469fee6083d243912e1ed4ec11d67, type: 3}
   m_PrefabInstance: {fileID: 218256543}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &226133864
@@ -11996,6 +12005,8 @@ MonoBehaviour:
   - {fileID: 617681828}
   active: 0
   PlayerIds: 
+  ScoreCounterObj: {fileID: 218256545}
+  necessaryplayers: 0
 --- !u!4 &1781273129
 Transform:
   m_ObjectHideFlags: 0

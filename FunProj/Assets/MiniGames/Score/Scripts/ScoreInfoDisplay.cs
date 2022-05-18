@@ -671,17 +671,30 @@ IEnumerator ZoomingIn(bool realwinner)
         FadeIn.SetActive(false);
         FadeIn.SetActive(true);
         yield return new WaitForSeconds(.1f);
-        FadeOut.SetActive(false);
-        WinnerCanvas.SetActive(false);
+      
+       
 
-        Debug.Log("here");
+        if(!(bool)PhotonNetwork.MasterClient.CustomProperties["WheelUsed"])
+        {
+            FadeOut.SetActive(false);
+            WinnerCanvas.SetActive(false);
 
-        WheelCanvas.SetActive(true);
-        secondcam.gameObject.SetActive(true);
-        camfollow.gameObject.SetActive(false);
+            WheelCanvas.SetActive(true);
+            secondcam.gameObject.SetActive(true);
+            camfollow.gameObject.SetActive(false);
 
-        ActivateButtons();
-        
+            ActivateButtons();
+        }
+        else
+        { 
+            if (PhotonNetwork.IsMasterClient)
+            {
+                PhotonNetwork.LoadLevel("CharacterSelect");
+            }
+
+        }
+      
+
 
     }
 

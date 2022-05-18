@@ -14,7 +14,8 @@ public class SpawnPlayers : MonoBehaviourPunCallbacks/*, IPunObservable*/
     [SerializeField] bool active;
 
     [SerializeField] int[] PlayerIds;
-
+    [SerializeField] public GameObject ScoreCounterObj;
+  public int necessaryplayers;
 
     /* void IPunObservable.OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
      {
@@ -64,7 +65,7 @@ public class SpawnPlayers : MonoBehaviourPunCallbacks/*, IPunObservable*/
 
             }
           
-            if (PlayersJoined == PlayerPrefs.GetInt("PlayerNumber") )
+            if (PlayersJoined == necessaryplayers )
             {
 
                 active = false;
@@ -75,8 +76,27 @@ public class SpawnPlayers : MonoBehaviourPunCallbacks/*, IPunObservable*/
         }
     }
 
-   
 
+    private void Awake()
+    {
+
+
+        if ((bool)PhotonNetwork.MasterClient.CustomProperties["OneVOne"] == true)
+        {
+          
+            if(FindObjectOfType<ScoreCounter>() )
+            {
+                FindObjectOfType<ScoreCounter>().playersAlive = 2;
+            }
+        
+            necessaryplayers = 2;
+            return;
+        }
+
+        necessaryplayers = PlayerPrefs.GetInt("PlayerNumber");
+
+   
+    }
 
     private void Start()
     {
@@ -131,6 +151,37 @@ public class SpawnPlayers : MonoBehaviourPunCallbacks/*, IPunObservable*/
 
 
 
+       
+
+        if((bool)PhotonNetwork.MasterClient.CustomProperties["OneVOne"]==true)
+        {
+            var hash = PhotonNetwork.LocalPlayer.CustomProperties;
+            hash["OldScore"] = 0;
+            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+
+
+            int winindex = (int)PhotonNetwork.MasterClient.CustomProperties["Player1"];
+            int index = (int)PhotonNetwork.MasterClient.CustomProperties["Player2"];
+
+            if (PhotonNetwork.LocalPlayer == players[winindex] || PhotonNetwork.LocalPlayer == players[index])
+            {
+              
+
+                PhotonInstantiatePlayer(pos);
+            }
+            yield break;
+        }
+     
+       
+
+      PhotonInstantiatePlayer(pos);
+        
+
+    }
+
+
+    void PhotonInstantiatePlayer(int pos)
+    {
         Vector3 spawnPos = new Vector3(spawnPositions[pos].position.x - 0.7570001f, spawnPositions[pos].position.y, spawnPositions[pos].position.z);
 
         if (PhotonNetwork.LocalPlayer.CustomProperties["playerAvatar"] == null)
@@ -144,6 +195,9 @@ public class SpawnPlayers : MonoBehaviourPunCallbacks/*, IPunObservable*/
             PhotonNetwork.Instantiate(playertoSpawn.name, spawnPos, Quaternion.identity);
 
         }
+
+        ScoreCounterObj.SetActive(true);
+
     }
 
 
