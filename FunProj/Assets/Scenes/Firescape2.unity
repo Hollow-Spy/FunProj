@@ -66767,6 +66767,8 @@ MonoBehaviour:
   - {fileID: 617681828}
   active: 0
   PlayerIds: 
+  ScoreCounterObj: {fileID: 1562051088088338656}
+  necessaryplayers: 0
 --- !u!4 &1781273129
 Transform:
   m_ObjectHideFlags: 0
@@ -68386,6 +68388,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d65469fee6083d243912e1ed4ec11d67, type: 3}
+--- !u!1 &1562051088088338656 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1562051087075453912, guid: d65469fee6083d243912e1ed4ec11d67, type: 3}
+  m_PrefabInstance: {fileID: 1562051088088338655}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7968969983201692112
 PrefabInstance:
   m_ObjectHideFlags: 0

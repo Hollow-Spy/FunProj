@@ -35,6 +35,9 @@ public class ScoreInfoDisplay : MonoBehaviourPun
 
     [SerializeField] Transform OGCamPos;
     int playerAmout;
+
+
+    bool LoadingCharacterSelect;
     
     private void Start()
     {
@@ -285,7 +288,9 @@ public class ScoreInfoDisplay : MonoBehaviourPun
             winner = true;
             int winnerscore = 0;
             int.TryParse(OtherScores[primebarr].text, out winnerscore);
-            if (winnerscore >= 100)
+            //SCORE WINNER SCORE HERE!
+            int ScoreToWin = (int)PhotonNetwork.MasterClient.CustomProperties["ScoreToWin"];
+            if (winnerscore >= ScoreToWin)
             {
                 RealWinner = true;
             }
@@ -420,11 +425,11 @@ public class ScoreInfoDisplay : MonoBehaviourPun
                 }
             }
           
-            if (allReady && PhotonNetwork.IsMasterClient && !once && Player && Player.GetComponent<PhotonView>().IsMine)
+            if (allReady && PhotonNetwork.IsMasterClient && !once && !LoadingCharacterSelect && Player.GetComponent<PhotonView>().IsMine)
             {
                 once = true;
 
-
+                Debug.Log("loading scene");
 
                 // RoomJoiner.LoadLeve("Firescape2");
                 RoomJoiner.LoadRandomLeve();
@@ -686,8 +691,9 @@ IEnumerator ZoomingIn(bool realwinner)
             ActivateButtons();
         }
         else
-        { 
-            if (PhotonNetwork.IsMasterClient)
+        {
+            LoadingCharacterSelect = true;
+            if (PhotonNetwork.IsMasterClient && Player.GetComponent<PhotonView>().IsMine)
             {
                 PhotonNetwork.LoadLevel("CharacterSelect");
             }

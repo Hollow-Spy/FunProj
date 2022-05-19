@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-
-public class WheelSpinner : MonoBehaviourPun
+using Photon.Realtime;
+public class WheelSpinner : MonoBehaviourPunCallbacks
 {
    Rigidbody2D WheelBody;
     PhotonView view;
@@ -30,6 +30,30 @@ public class WheelSpinner : MonoBehaviourPun
        
         view.RPC("SpinALL", RpcTarget.All,strengh);
 
+    }
+
+    public void LoadCharacterScene()
+    {
+
+        view.RPC("ShowTransition", RpcTarget.All);
+        StartCoroutine(DontSpinNumerator());
+    }
+
+    [PunRPC]
+    void ShowTransition()
+    {
+        transitionOff.SetActive(true);
+
+    }
+
+    IEnumerator DontSpinNumerator()
+    {
+        yield return new WaitForSeconds(2);
+        if(PhotonNetwork.IsMasterClient )
+        {
+            PhotonNetwork.LoadLevel("CharacterSelect");
+        }
+       
     }
 
     public void Print()
@@ -91,11 +115,11 @@ public class WheelSpinner : MonoBehaviourPun
     {
        // float strengh = 100;// love
         // float strengh = 199777;// death
-         float strengh = 299777;  //1v1
-        //float strengh = 459977; //golden point
+        // float strengh = 299777;  //1v1
+        float strengh = 459977; //golden point
         //float strengh = 899977; //loser wins
         // float strengh = 1409977;//[pure winner
-      //  float strengh = 1639977; // 1v3
+       // float strengh = 1639977; // 1v3
         view.RPC("SpinALL", RpcTarget.All, strengh);
         
 
@@ -209,6 +233,12 @@ public class WheelSpinner : MonoBehaviourPun
 
             case 2:
                 onevoner.FindOneVOne();
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    var hashh = PhotonNetwork.MasterClient.CustomProperties;
+                    hash["ScoreToWin"] = 10;
+                    PhotonNetwork.MasterClient.SetCustomProperties(hash);
+                }
                 yield return new WaitForSeconds(6.5f);
                 transitionOff.SetActive(true);
                 break;
@@ -221,11 +251,27 @@ public class WheelSpinner : MonoBehaviourPun
                 arrowsprite.enabled = false;
                 yield return new WaitForSeconds(3);
                 transitionOff.SetActive(true);
+                yield return new WaitForSeconds(3);
+
+
+                if (PhotonNetwork.IsMasterClient)
+                {
+                  var hashh = PhotonNetwork.MasterClient.CustomProperties;
+                  hash["GoldenPoint"] = true;
+                   hash["ScoreToWin"] = 10;
+                    PhotonNetwork.MasterClient.SetCustomProperties(hash);
+                  FindObjectOfType<CreateNJoinRooms>().LoadRandomLeve();
+                }
                 break;
             case 4:
                 boringText.SetActive(true);
                 yield return new WaitForSeconds(5f);
                 transitionOff.SetActive(true);
+                yield return new WaitForSeconds(3);
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PhotonNetwork.LoadLevel("CharacterSelect");
+                }
                 break;
             case 5:
                 wheelsprite.enabled = false;
@@ -296,7 +342,7 @@ public class WheelSpinner : MonoBehaviourPun
                 int NonWinnerIndex=0;
                  for(int i =0;i<playerAmout;i++)
                   {
-                    Debug.Log(i);
+                   
 ;                      if(winnerindex != i && scoredisplay0.DoesPlayerExist(i))
                     {
                         Debug.Log("hi");
@@ -347,6 +393,17 @@ public class WheelSpinner : MonoBehaviourPun
                 OneVThreeCam.GetComponent<Animator>().Play("SpotLightReverseAnim");
                 yield return new WaitForSeconds(2f);
                 transitionOff.SetActive(true);
+
+
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    var hashh = PhotonNetwork.MasterClient.CustomProperties;
+                    hash["OneVThree"] = true;
+                    hash["Player1"] = winnerindex;
+                    PhotonNetwork.MasterClient.SetCustomProperties(hash);
+                    FindObjectOfType<CreateNJoinRooms>().LoadRandomLeve();
+                }
+
                 break;
 
         }

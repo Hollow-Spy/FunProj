@@ -76,6 +76,9 @@ public class CreateNJoinRooms : MonoBehaviourPunCallbacks
 
     public void LoadLeve(string name)
     {
+
+        
+
         GetComponent<PhotonView>().RPC("SetPlayerAmout", RpcTarget.All);
 
 

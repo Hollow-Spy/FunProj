@@ -60,6 +60,8 @@ MonoBehaviour:
   - Shoot
   - SpinALL
   - ClickALL
+  - OneVThreePlayerDied
+  - ShowTransition
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

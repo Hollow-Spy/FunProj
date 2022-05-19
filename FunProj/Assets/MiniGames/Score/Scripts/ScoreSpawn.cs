@@ -45,7 +45,7 @@ public class ScoreSpawn : MonoBehaviourPunCallbacks /*, IPunObservable*/
 
     private void Start()
     {
-
+       
         view = GetComponent<PhotonView>();
         PlayerIds = new int[PlayerPrefs.GetInt("PlayerNumber")];
         for (int i = 0; i < PlayerIds.Length; i++)

@@ -23,8 +23,8 @@ public class ScoreCounter : MonoBehaviourPunCallbacks
     float TransitionTime=1;
 
    [SerializeField] bool DyingRemovesScore;
+    bool WinnerLost = false;
 
-  
 
     void Start()
     {
@@ -53,7 +53,7 @@ public class ScoreCounter : MonoBehaviourPunCallbacks
 
 
         playersAlive = FindObjectOfType<SpawnPlayers>().necessaryplayers;
-       
+     
 
         StartCoroutine( ScoreIncrease() );
     }
@@ -68,8 +68,63 @@ public class ScoreCounter : MonoBehaviourPunCallbacks
    
     public void PlayerDiedAll()
     {
+        if ((bool)PhotonNetwork.MasterClient.CustomProperties["OneVThree"] == true)
+        {
+            view.RPC("OneVThreePlayerDied", RpcTarget.All);
+  
+            return;
+        }
+
         view.RPC("PlayerDied", RpcTarget.All);
     }
+
+    [PunRPC]
+    void OneVThreePlayerDied()
+    {
+        PhotonView theview = null;
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        for (int i = 0; i < players.Length; i++)
+        {
+            if (players[i].GetComponent<PhotonView>().IsMine)
+            {
+                theview = players[i].GetComponent<PhotonView>();
+            }
+        }
+
+
+        if (theview.IsMine)
+        {
+            playersAlive--;
+
+           
+            if( PhotonNetwork.PlayerList[(int)PhotonNetwork.MasterClient.CustomProperties["Player1"]] == PhotonNetwork.LocalPlayer && theview.GetComponent<PlayerController>().is_dead)
+            {
+                var hash = PhotonNetwork.MasterClient.CustomProperties;
+                hash["Player2"] = hash["Player1"];
+                hash["Player1"] = -1;
+              
+                PhotonNetwork.MasterClient.SetCustomProperties(hash);
+
+                WinnerLost = true;
+
+              
+            }
+         
+            if (maxPlayersAliveAllowed >= playersAlive || WinnerLost)
+            {
+                var hash = PhotonNetwork.MasterClient.CustomProperties;
+                hash["OneVThreeOver"] = true;
+
+                PhotonNetwork.MasterClient.SetCustomProperties(hash);
+
+                TimeCanvas.SetActive(true);
+
+            }
+        }
+
+    }
+  
 
 
     [PunRPC]
@@ -126,7 +181,15 @@ public class ScoreCounter : MonoBehaviourPunCallbacks
             if (TransitionTime < -7)
             {
                 TransitionTime = 999;
+                if ((bool)PhotonNetwork.MasterClient.CustomProperties["OneVThree"] == true)
+                {
+                    
+                         PhotonNetwork.LoadLevel("OneVThree");
+                    return;
+                }
                 PhotonNetwork.LoadLevel("ScoreShow");
+
+
             }
 
         }

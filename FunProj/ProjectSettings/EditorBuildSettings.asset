@@ -24,6 +24,9 @@ EditorBuildSettings:
     path: Assets/Scenes/ScoreShow.unity
     guid: ab7f2a60878e03f46a247414ee9f9d5d
   - enabled: 1
+    path: Assets/Scenes/OneVThree.unity
+    guid: ed9c21c89a449dd45aab99581c983d8d
+  - enabled: 1
     path: Assets/Scenes/EvilSam3.unity
     guid: bd3b670e4e95a1f409fffbf85dd36015
   m_configObjects: {}

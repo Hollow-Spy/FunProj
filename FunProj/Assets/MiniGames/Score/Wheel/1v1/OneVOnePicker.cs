@@ -52,8 +52,8 @@ public class OneVOnePicker : MonoBehaviourPun
 
        if(PhotonNetwork.IsMasterClient)
         {
+          
             loveshower.Click(randomtarget, winnerindex);
-
         }
         
 

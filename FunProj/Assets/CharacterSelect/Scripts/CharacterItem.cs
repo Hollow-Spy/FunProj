@@ -18,13 +18,17 @@ public class CharacterItem : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-       playerProperties["OldScore"] = 0;
+        
+        playerProperties["OldScore"] = 0;
         playerProperties["NewScore"] = 0;
+        playerProperties["ScoreToWin"] = 3000;
         playerProperties["WheelUsed"] = false;
         playerProperties["OneVOne"] = false;
         playerProperties["Player1"] = -1;
         playerProperties["Player2"] = -1;
-
+        playerProperties["GoldenPoint"] = false;
+        playerProperties["OneVThree"] = false;
+        playerProperties["OneVThreeOver"] = false;
 
         PhotonNetwork.SetPlayerCustomProperties(playerProperties);
     }

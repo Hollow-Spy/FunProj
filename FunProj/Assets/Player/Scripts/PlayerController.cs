@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     [SerializeField] GameObject SolidHairObj,DynamicHairObj;
     [SerializeField] GameObject skeleton;
 
-
+    bool canSuicide=false;
     void IPunObservable.OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
@@ -270,11 +270,12 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
 
         QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
+        view = GetComponent<PhotonView>();
 
-        if(GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>() )
+        if (GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>() )
         {
             camfollow = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollow>();
-            if (camfollow.target == null)
+            if (camfollow.target == null && view.IsMine)
             {
                 camfollow.GetComponent<CameraFollow>().target = gameObject.transform;
             }
@@ -283,15 +284,19 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
 
 
 
-        view = GetComponent<PhotonView>();
+       
 
         body = GetComponent<Rigidbody2D>();
         OGgravity = body.gravityScale;
 
-       
+        StartCoroutine(SuicideDelayNumerator());
     }
 
-    
+    IEnumerator SuicideDelayNumerator()
+    {
+        yield return new WaitForSeconds(4);
+        canSuicide = true;
+    }
 
     void OnDrawGizmos()
     {/*
@@ -341,6 +346,8 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
 
     void Update()
     {
+        
+
      if(is_Airborne && body.velocity.y < FallSpeedCap)
         {
      
@@ -377,7 +384,7 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
                 transform.position = GameObject.Find("WormSpot").transform.position;
             }
                  */
-            if (Input.GetKeyDown(KeyCode.I))
+            if (canSuicide && Input.GetKeyDown(KeyCode.I) )
             {
                 DeathALL();
             }

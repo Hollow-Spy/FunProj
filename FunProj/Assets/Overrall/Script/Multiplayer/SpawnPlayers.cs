@@ -79,6 +79,7 @@ public class SpawnPlayers : MonoBehaviourPunCallbacks/*, IPunObservable*/
 
     private void Awake()
     {
+      
 
 
         if ((bool)PhotonNetwork.MasterClient.CustomProperties["OneVOne"] == true)
@@ -88,20 +89,38 @@ public class SpawnPlayers : MonoBehaviourPunCallbacks/*, IPunObservable*/
             {
                 FindObjectOfType<ScoreCounter>().playersAlive = 2;
             }
-        
+         
+
             necessaryplayers = 2;
             return;
         }
 
-        necessaryplayers = PlayerPrefs.GetInt("PlayerNumber");
+        if ((bool)PhotonNetwork.MasterClient.CustomProperties["OneVThreeOver"] == true)
+        {
+            if((int)PhotonNetwork.MasterClient.CustomProperties["Player1"] != -1)
+            {
+              
+                necessaryplayers = 1;
+            }
+            else
+            {
+                necessaryplayers = PhotonNetwork.CurrentRoom.PlayerCount - 1;
+            }
+            return;
+        }
 
-   
+
+
+            necessaryplayers = PlayerPrefs.GetInt("PlayerNumber");
+
+
     }
 
     private void Start()
     {
+        Time.timeScale = 1;
+      
 
-       
 
 
         view = GetComponent<PhotonView>();
@@ -127,6 +146,7 @@ public class SpawnPlayers : MonoBehaviourPunCallbacks/*, IPunObservable*/
 
         }*/
         active = true;
+      
 
         StartCoroutine(SpawnPlayer());
 
@@ -137,8 +157,10 @@ public class SpawnPlayers : MonoBehaviourPunCallbacks/*, IPunObservable*/
 
     IEnumerator SpawnPlayer()
     {
+       
         yield return new WaitForSeconds(.1f);
         int pos = 0;
+     
         Player[] players = PhotonNetwork.PlayerList;
         for (int i = 0; i < players.Length; i++)
         {
@@ -148,16 +170,17 @@ public class SpawnPlayers : MonoBehaviourPunCallbacks/*, IPunObservable*/
             }
         }
 
+    
 
 
 
-       
 
-        if((bool)PhotonNetwork.MasterClient.CustomProperties["OneVOne"]==true)
+
+        if ((bool)PhotonNetwork.MasterClient.CustomProperties["OneVOne"]==true)
         {
-            var hash = PhotonNetwork.LocalPlayer.CustomProperties;
-            hash["OldScore"] = 0;
-            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+        
+
+            ResetOldScore();
 
 
             int winindex = (int)PhotonNetwork.MasterClient.CustomProperties["Player1"];
@@ -171,12 +194,48 @@ public class SpawnPlayers : MonoBehaviourPunCallbacks/*, IPunObservable*/
             }
             yield break;
         }
-     
-       
 
-      PhotonInstantiatePlayer(pos);
+        if ((bool)PhotonNetwork.MasterClient.CustomProperties["GoldenPoint"] == true)
+        {
+
+            ResetOldScore();
+        }
+
+        if((bool)PhotonNetwork.MasterClient.CustomProperties["OneVThreeOver"] )
+        {
+            if((int)PhotonNetwork.MasterClient.CustomProperties["Player1"] != -1 )
+            {
+                Debug.Log("HI IS NOT -1");
+                if(PhotonNetwork.LocalPlayer == players[(int)PhotonNetwork.MasterClient.CustomProperties["Player1"]])
+                {
+                    PhotonInstantiatePlayer(pos);
+                }
+
+
+            }
+            else
+            {
+                if (PhotonNetwork.LocalPlayer != players[(int)PhotonNetwork.MasterClient.CustomProperties["Player2"]])
+                {
+                    PhotonInstantiatePlayer(pos);
+                }
+                
+            }
+            yield break;
+
+        }
+
+     
+            PhotonInstantiatePlayer(pos);
         
 
+    }
+
+    void ResetOldScore()
+    {
+        var hash = PhotonNetwork.LocalPlayer.CustomProperties;
+        hash["OldScore"] = 0;
+        PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
     }
 
 
